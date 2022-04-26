@@ -1,4 +1,3 @@
-import 'package:bjj_guide/Drop%20Down/history.dart';
 import 'package:bjj_guide/Submissions/americana.dart';
 import 'package:bjj_guide/Submissions/armTriangle.dart';
 import 'package:bjj_guide/Submissions/kimura.dart';
@@ -82,14 +81,6 @@ class _SideControlState extends State<SideControl> {
                     fontSize: 16.0,
                     color: Colors.black,
                   ),
-                ),
-                const Text(
-                  "Transitions",
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontSize: 16.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600),
                 ),
                 const Text(
                   "Submissions",

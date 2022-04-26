@@ -1,10 +1,9 @@
-import 'package:bjj_guide/Drop%20Down/history.dart';
+import 'package:bjj_guide/Buttons/history.dart';
 import 'package:bjj_guide/models/comment.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Drop Down/positionList.dart';
+import 'Buttons/positionList.dart';
 import 'database_service.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -85,33 +84,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.black,
                   fontWeight: FontWeight.w600),
             ),
-            StreamBuilder<List<Comment>>(
-              stream: _db.comments,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text("An error has occured!"),
-                  );
-                } else {
-                  var comments = snapshot.data ?? [];
-
-                  return comments.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: comments.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                                elevation: 5.0,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(comments[index].comment),
-                                ));
-                          })
-                      : const Center(
-                          child: Text("No comments have been made yet."),
-                        );
-                }
-              },
-            ),
+           StreamBuilder<List<Comment>>(
+        stream: _db.comments,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var comments = snapshot.data ?? [];
+            return ListView.builder(
+              padding: const EdgeInsets.all(10.0),
+              itemCount: comments.length,
+              itemBuilder: (BuildContext context, int index) =>
+                   Text(comments[index].comment),
+                  reverse: true,
+            );
+          } else {
+            return const Text("no comments yet.");
+          }
+        },
+      ),
             Container(height: 55)
           ]),
         ));
