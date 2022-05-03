@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bjj_guide/models/comment.dart';
 import 'package:bjj_guide/models/user.dart';
+import 'package:rxdart/rxdart.dart';
 
 class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -11,8 +12,8 @@ class DatabaseService {
   final StreamController<Map<String, User>> _usersController =
       StreamController<Map<String, User>>();
 
-  final StreamController<List<Comment>> _commentsController =
-      StreamController<List<Comment>>();
+  final StreamController<List<Comment>> _commentsController = BehaviorSubject();
+  //StreamController<List<Comment>>.broadcast(sync: true);
 
   DatabaseService() {
     _firestore.collection('users').snapshots().listen(_usersUpdated);
@@ -59,22 +60,22 @@ class DatabaseService {
     return User.fromMap(snapshot.id, snapshot.data()!);
   }
 
-  Future<void> setUser(String uid, String displayName, String email) async {
+  Future<void> setUser(String uid, String displayName, String email, String belt) async {
     await _firestore.collection("users").doc(uid).set({
       "name": displayName,
-      "type": "USER",
+      "belt": belt,
       "email": email,
       "created": DateTime.now()
     });
     return;
   }
 
-  Future<void> addComment(String uid, String message, String page) async {
+  Future<void> addComment(String message, String uid, String page) async {
     await _firestore.collection("comments").add({
-      'message': message,
+      'comment': message,
+      "created": DateTime.now(),
       'from': uid,
-      'page': page,
-      "created": DateTime.now()
+      'page': page
     });
     return;
   }

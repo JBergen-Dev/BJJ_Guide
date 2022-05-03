@@ -1,5 +1,5 @@
+import 'package:bjj_guide/Authentication/signin.dart';
 import 'package:flutter/material.dart';
-import 'homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'database_service.dart';
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SignInPage()
     );
   }
 }
